@@ -1,0 +1,17 @@
+{  
+    "manifest_version": 2,  
+    "name": "IF Gestão",  
+    "description": "Esta é uma extensão para gerenciar chefiados",  
+    "version": "1.0", 
+    "permissions": ["activeTab"] , 
+    "browser_action": {  
+        "default_icon": "images/logo.png"
+    },
+    "content_scripts": [
+        {
+          "matches": ["https://academico.ifms.edu.br/administrativo/horario_docentes/*"],
+          "js": ["index.js"]
+        }
+      ]
+    
+} 
