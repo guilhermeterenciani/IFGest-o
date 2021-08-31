@@ -1,7 +1,7 @@
 {
   "name": "Acadêmico IFMS",
-  "description": "Adiciona Funcionalidades para auxiliar na gestão dos Planos de Ensino e Planos Individuais de Trabalho",
-  "version": "0.1.0",
+  "description": "Adiciona funcionalidades para auxiliar na gestão dos Planos de Ensino e Planos Individuais de Trabalho no Sistema Acadêmico do IFMS",
+  "version": "1.0.0",
   "manifest_version": 3,
   "content_scripts": [
     {
