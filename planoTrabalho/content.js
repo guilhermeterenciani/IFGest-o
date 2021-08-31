@@ -337,7 +337,7 @@ email: alisson.chiquitto@ifms.edu.br
       if ((carga < cargaSugeridoMargem1) || (carga > cargaSugeridoMargem2)) {
         
         retorno.mensagem= `Aulas: ${minutosToHorasString(cargaAula)} horas <br/>Carga cadastrada: ${minutosToHorasString(carga)} horas <br/>Carga sugerido: ${minutosToHorasString(cargaSugerido)} horas <br/>Margem (${margem}%) aceitavel sugerido: entre ${minutosToHorasString(cargaSugeridoMargem1)} e ${minutosToHorasString(cargaSugeridoMargem2)} horas`;
-        retorno.status="repovado";
+        retorno.status="reprovado";
         return retorno;
       }
       else{
@@ -389,30 +389,41 @@ email: alisson.chiquitto@ifms.edu.br
       return true
     }
     function displayAll(){
+      const CH_DIARIA_MINUTOS = 8*60
       let table = document.querySelectorAll('.diario')[0]
       let numOfRows = table.rows.length;
       let newRow = table.insertRow(numOfRows);
       let numOfCols = table.rows[numOfRows-1].cells.length;
       // Faz um loop para criar as colunas
       newCell = newRow.insertCell(0);
-      newCell.innerHTML = "Tempo por dia";
+      newCell.innerHTML = "Carga Horária Total";
      
       newCell = newRow.insertCell(1);
-      newCell.innerHTML = "tempo";
+      newCell.innerHTML = "---";
       let j;
       for ( j= 2; j < numOfCols; j++) {
         let soma = dias[j-1].somaTrabalhos()
         // Insere uma coluna na nova linha 
         newCell = newRow.insertCell(j);
         // Insere um conteúdo na coluna
-        
-        if(soma!=8*60){
+        console.log(soma)
+        if(soma<CH_DIARIA_MINUTOS){
+          
           newCell.innerHTML = `<div class="hovered preparacao-4620 caixa_horario caixa_horario_p" referer="preparacao-4620">
           <span class="no-print label label-warning" title="Aguardando Aprovação">
           <i class="icon-wrench icon-white"></i>
           </span>
           <p style="">
-          <strong>Diminuir ou aumentar carga horária do dia</strong>
+          <strong> Aumentar carga horária do dia</strong>
+          <br>${minutosToHorasString(soma)}</p>
+          </div>`
+        }else if(soma>CH_DIARIA_MINUTOS){
+          newCell.innerHTML = `<div class="hovered permanencia-4620 caixa_horario caixa_horario_p" referer="permanencia-4620">
+          <span class="no-print label label-warning" title="Aguardando Aprovação">
+          <i class="icon-wrench icon-white"></i>
+          </span>
+          <p style="">
+          <strong>Diminuir carga horária do dia</strong>
           <br>${minutosToHorasString(soma)}</p>
           </div>`
         }
@@ -420,7 +431,7 @@ email: alisson.chiquitto@ifms.edu.br
           newCell.innerHTML = `<div class="hovered pat-22713 caixa_horario caixa_horario_pat" referer="pat-22713">
           <span class="no-print label label-success" title="Aprovado">
           <i class="icon-ok-sign icon-white"></i></span>
-          <p style=""><strong>Horário correto</strong><br>${minutosToHorasString(soma)}</p></div>`
+          <p style=""><strong></strong><br>${minutosToHorasString(soma)}</p></div>`
         }
       }
       newCell = newRow.insertCell(j);
