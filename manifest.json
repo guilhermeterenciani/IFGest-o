@@ -1,23 +1,29 @@
 {
   "name": "Acadêmico IFMS",
   "description": "Adiciona funcionalidades para auxiliar na gestão dos planos de ensino e planos individuais de trabalho.",
-  "version": "2.0.1",
+  "version": "2.1.1",
   "manifest_version": 3,
   "content_scripts": [
     {
-       "matches": [
-         "https://academico.ifms.edu.br/administrativo/professores/diario/*/plano_ensino/editar/*"
-        ],
-       "js": ["/planoEnsino/content.js"],
-       "css":["/planoEnsino/style.css"]
-       
+      "matches": [
+        "https://academico.ifms.edu.br/administrativo/professores/diario/*/plano_ensino/editar/*"
+      ],
+      "js": [
+        "/planoEnsino/content.js"
+      ],
+      "css": [
+        "/planoEnsino/style.css"
+      ]
     },
     {
-      "matches": ["https://academico.ifms.edu.br/administrativo/horario_docentes/*"],
-      "js": ["/planoTrabalho/content.js"]
+      "matches": [
+        "https://academico.ifms.edu.br/administrativo/horario_docentes/*"
+      ],
+      "js": [
+        "/planoTrabalho/content.js"
+      ]
     }
-  ],  
-  
+  ],
   "icons": {
     "16": "/images/icon-16.png",
     "32": "/images/icon-32.png",
