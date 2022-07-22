@@ -21,7 +21,7 @@ btnGerarProposta.classList.add('btn-mini')
 btnGerarProposta.classList.add('btn-warning')
 getNumeroAulasProposta().then((numeroAulas) => {
     if (numeroAulas === 0) {
-        divAdicionarProposta.appendChild(btnGerarProposta)
+        btnGerarProposta.click()
     }
 })
 
@@ -110,8 +110,9 @@ function getNumeroAulasUC() {
 }
 
 async function getNumeroAulasProposta() {
+    showModal('Consultando o número de aulas da unidade curricular')
     const dadosProposta = await getDadosPropostaTrabalho()
-
+    hideModal()
     const qtdeAulasProposta = dadosProposta.aaData.map((item) => {
         return item[2]
     }).reduce((acc, curr) => {
