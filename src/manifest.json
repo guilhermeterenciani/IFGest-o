@@ -9,10 +9,10 @@
         "https://academico.ifms.edu.br/administrativo/professores/diario/*/plano_ensino/editar/*"
       ],
       "js": [
-        "/planoEnsino/content.js"
+        "planoEnsino/content.js"
       ],
       "css": [
-        "/planoEnsino/style.css"
+        "planoEnsino/style.css"
       ]
     },
     {
@@ -20,14 +20,14 @@
         "https://academico.ifms.edu.br/administrativo/horario_docentes/*"
       ],
       "js": [
-        "/planoTrabalho/content.js"
+        "planoTrabalho/content.js"
       ]
     }
   ],
   "icons": {
-    "16": "/images/icon-16.png",
-    "32": "/images/icon-32.png",
-    "48": "/images/icon-48.png",
-    "128": "/images/icon-128.png"
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
   }
 }
