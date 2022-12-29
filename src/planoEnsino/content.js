@@ -47,6 +47,7 @@ btnGerarProposta.addEventListener("click", async () => {
             if (numeroDeAulasDaProposta > 0) {
                 Swal.hideLoading()
                 Swal.update({
+                    showConfirmButton: true,
                     title: "Não foi possível gerar o calendário da proposta",
                     icon: "error",
                     html: `
@@ -64,6 +65,7 @@ btnGerarProposta.addEventListener("click", async () => {
 })
 
 async function gerarProposta() {
+    Swal.showLoading()
     Swal.update({
         title: "Gerando Calendário da Proposta",
         text: "aguarde...",
