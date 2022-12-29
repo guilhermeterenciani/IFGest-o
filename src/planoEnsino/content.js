@@ -35,19 +35,6 @@ btnGerarProposta.addEventListener("click", async () => {
 
 // modal aguarde
 
-function showModal(message) {
-    const modal = document.createElement("div")
-    modal.classList.add("modal-wrapper")
-    modal.innerHTML = `<div class="modal-proposta">
-                        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-                        <h3>${message}</h3><h4>aguarde um momento</h4>
-                       </div>`
-    document.body.appendChild(modal)
-}
-function hideModal() {
-    document.body.removeChild(document.body.querySelector(".modal-wrapper"))
-}
-
 async function gerarProposta() {
     const aulas = await criarListaDatasDeAula()
     if (!aulas) return false
@@ -115,7 +102,6 @@ function getNumeroAulasUC() {
 }
 
 async function getNumeroAulasProposta() {
-    showModal("Consultando o número de aulas da unidade curricular")
     const dadosProposta = await getDadosPropostaTrabalho(
         idDiario,
         idPlanoEnsino,
