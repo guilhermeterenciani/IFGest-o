@@ -4,6 +4,7 @@ import {
     getFormProposta,
     gravarProposta,
 } from "../services/api"
+import "../utils/datePrototypeGetWeek"
 const url = document.URL
 const idPlanoEnsino = url.split("/")[9]
 const idDiario = url.split("/")[6]
@@ -26,39 +27,12 @@ btnGerarProposta.textContent = "Gerar Calendário da Proposta"
 btnGerarProposta.classList.add("btn")
 btnGerarProposta.classList.add("btn-mini")
 btnGerarProposta.classList.add("btn-warning")
-getNumeroAulasProposta().then((numeroAulas) => {
-    if (numeroAulas === 0) {
-        btnGerarProposta.click()
-    }
-})
+divAdicionarProposta.appendChild(btnGerarProposta)
 
 btnGerarProposta.addEventListener("click", async () => {
-    showModal("Gerando Calendário da Proposta")
-    gerarProposta().then((data) => {
-        if (data) {
-            document.location.reload()
-        }
-        hideModal()
-    })
+    gerarProposta()
 })
 
-Date.prototype.getWeek = function(weekStart) {
-    var januaryFirst = new Date(this.getFullYear(), 0, 1)
-    if (
-        weekStart !== undefined &&
-        (typeof weekStart !== "number" ||
-            weekStart % 1 !== 0 ||
-            weekStart < 0 ||
-            weekStart > 6)
-    ) {
-        throw new Error("Wrong argument. Must be an integer between 0 and 6.")
-    }
-    weekStart = weekStart || 0
-    return Math.floor(
-        ((this - januaryFirst) / 86400000 + januaryFirst.getDay() - weekStart) /
-            7,
-    )
-}
 // modal aguarde
 
 function showModal(message) {
