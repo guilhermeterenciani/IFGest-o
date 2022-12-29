@@ -88,7 +88,7 @@ async function criarListaDatasDeAula() {
                 qtde: listaDataDasAulas.length,
                 sabadoLetivo:
                     listaDataDasAulas[listaDataDasAulas.length - 1].getDay() ===
-                    6,
+                        6 ?? false,
             }
         },
     )
