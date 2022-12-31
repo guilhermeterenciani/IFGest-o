@@ -65,10 +65,10 @@ btnGerarProposta.addEventListener("click", async () => {
 })
 
 async function gerarProposta() {
-    Swal.showLoading()
-    Swal.update({
+    Swal.fire({
         title: "Gerando Calendário da Proposta",
         text: "aguarde...",
+        ...MODAL_LOADING_OPTIONS,
     })
     const aulas = await criarListaDatasDeAula()
     if (!aulas) return false
