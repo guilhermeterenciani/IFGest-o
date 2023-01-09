@@ -22,7 +22,24 @@
       "js": [
         "planoTrabalho/content.js"
       ]
+    },
+    {
+      "matches": [
+        "https://academico.ifms.edu.br/administrativo/horario_docentes/editar/*"
+      ],
+      "js": [
+        "/planoTrabalho/planoTrabalhoPrevia/gerarPrevia.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://academico.ifms.edu.br/administrativo/pats/adicionar/*"
+      ],
+      "js": [
+        "/planoTrabalho/planoTrabalhoPrevia/adicionarPAT.js"
+      ]
     }
+    
   ],
   "icons": {
     "16": "images/icon-16.png",
