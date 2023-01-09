@@ -25,7 +25,7 @@ function print(x, information) {
 
 //Clean localStorage
 // localStorage.setItem("PATKEY",JSON.stringify(patDTO))
-localStorage.removeItem("PATKEY")
+//localStorage.removeItem("PATKEY")
 
 const horaRelogio = [
     { horaInicio: "07:00", horaFim: "07:45" },
@@ -241,16 +241,16 @@ function addPOnFreeTime(idFather) {
 function savePATInLocalStorage() {
     print(
         schedule.filter((item) => item.status === "PAT"),
-        "Schedule that will be save",
+        "Schedule that will be save"
     )
     let patDTO = schedule
-        .filter((item) => item.status === "PAT")
         .map((item) => {
             return {
                 id: item.idNodeFree,
-                diaSemana: item.diaSemana,
+                diaSemana: item.diaSemana+1,
                 horaInicio: item.tempo.horaInicio,
                 horaFim: item.tempo.horaFim,
+                tipo: item.status
             }
         })
     localStorage.setItem("PATKEY", JSON.stringify(patDTO))
@@ -260,3 +260,25 @@ let button = document.querySelector(
     "#HorarioDocenteEditarForm > div.btn-group > a",
 )
 button.onclick = savePATInLocalStorage
+
+
+function carregarDoLocalStorage(){
+    const localStorageHistory = JSON.parse(localStorage.getItem("PATKEY"));
+    for( item of localStorageHistory){
+        switch (item.tipo) {
+            case "PE":
+                addPEOnFreeTime(item.id);
+                break;
+            case "PAT":
+                addPATOnFreeTime(item.id);
+                break
+            case "P":
+                addPOnFreeTime(item.id);
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+carregarDoLocalStorage();

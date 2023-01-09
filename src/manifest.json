@@ -38,6 +38,22 @@
       "js": [
         "/planoTrabalho/planoTrabalhoPrevia/adicionarPAT.js"
       ]
+    },
+    {
+      "matches": [
+        "https://academico.ifms.edu.br/administrativo/permanencias/adicionar/*"
+      ],
+      "js": [
+        "/planoTrabalho/planoTrabalhoPrevia/adicionarPE.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://academico.ifms.edu.br/administrativo/preparacoes/adicionar/*"
+      ],
+      "js": [
+        "/planoTrabalho/planoTrabalhoPrevia/adicionarP.js"
+      ]
     }
     
   ],
