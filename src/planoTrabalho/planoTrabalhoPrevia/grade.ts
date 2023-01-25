@@ -1,4 +1,3 @@
-import { table } from "console"
 import { diaDaSemana, periodos } from "./periodosDeAula.mjs"
 type THorario = {
     dataRowId: number
