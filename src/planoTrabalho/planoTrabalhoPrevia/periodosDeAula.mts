@@ -19,3 +19,12 @@ export const periodos = [
     { horaInicio: "21:15", horaFim: "22:00" },
     { horaInicio: "22:00", horaFim: "22:45" }
 ]
+
+export const diaDaSemana = [
+    "Segunda-feira",
+    "Terça-feira",
+    "Quarta-feira",
+    "Quinta-feira",
+    "Sexta-feira",
+    "Sábado"
+]
