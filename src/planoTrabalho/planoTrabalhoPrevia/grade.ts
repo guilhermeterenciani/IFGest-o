@@ -1,10 +1,11 @@
 import { periodos } from "./periodosDeAula.mjs"
 type THorario = {
-    dataId: number
+    dataIdRow: number
+    dataIdCol: number
     diaDaSemana: number
     periodo: object
     tipoPAT?: string
-    disponivel: boolean
+    ocupado: boolean
 }
 let gradeHorario: Array<THorario> = new Array<THorario>()
 
@@ -19,17 +20,25 @@ function generateTableCellList() {
         HTMLTableCellElement
     >()
     trArrayList.forEach((element, indexTRArray) => {
-        let periodo = indexTRArray + 1
+        let diaDaSemana = 1
         let tdChildElements = Array.from(element.querySelectorAll("td"))
-        tdChildElements.map(
-            (tableCell: HTMLTableCellElement, indexTDArray) => {}
-        )
+        tdChildElements.map((tableCell: HTMLTableCellElement, indexTDArray) => {
+            diaDaSemana += indexTDArray
+            let horario: THorario = {
+                dataIdRow: indexTRArray,
+                dataIdCol: indexTDArray,
+                diaDaSemana,
+                periodo: periodos[indexTRArray],
+                ocupado: tableCell.hasChildNodes()
+            }
+            gradeHorario.push(horario)
+        })
     })
 }
 
 function mapFreeTime(gradeHorario: Array<THorario>) {}
 
 ;(() => {
-    let list = generateTableCellList()
-    console.log(list)
+    generateTableCellList()
+    console.log(gradeHorario)
 })()
