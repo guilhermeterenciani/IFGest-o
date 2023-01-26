@@ -10,6 +10,11 @@ const horaInicioNodeDom = document.getElementById("hora_inicio")
 const horaFimNodeDom = document.getElementById("hora_fim")
 const diaDaSemanaNodeDom = document.getElementById("dia_semana")
 const btnAdcionar = document.getElementById("adicionar_horario")
+if (filteredPAT.length !== 0) {
+    const selectGradeHorario = document.querySelector("#grade_horaria")
+    selectGradeHorario.innerHTML = ""
+}
+
 for (horario of filteredPAT) {
     includePATOnInterface(
         horario.diaDaSemana,
