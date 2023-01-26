@@ -1,5 +1,5 @@
-import { diaDaSemana, periodos } from "./periodosDeAula.mjs"
-localStorage.setItem("grade", "[]")
+import { diaDaSemana, periodos } from "./periodos.mjs"
+
 enum TipoHorario {
     NONE = "NONE",
     PAT = "PAT",
@@ -9,7 +9,7 @@ enum TipoHorario {
 enum StatusHorario {
     OCUPADO = "OCUPADO",
     LIVRE = "LIVRE",
-    PENDENTE = "PENDENTE"
+    PREVIA = "PREVIA"
 }
 type THorario = {
     dataRowId: number
@@ -35,7 +35,6 @@ function gerarGradeDeHorarioModel() {
     const trArrayList = Array.from(trNodeList)
     trArrayList.pop() //remove a TR com o total de horas por dia da semana
     trArrayList.forEach((element, indexTRArray) => {
-        let diaDaSemana = 1
         let tdChildElements = Array.from(element.querySelectorAll("td"))
         tdChildElements.shift() // remove a TD com o rótulo : "1º tempo,2º tempo,..."
         tdChildElements.forEach(
@@ -46,12 +45,11 @@ function gerarGradeDeHorarioModel() {
         )
         let horariosTR = tdChildElements.map(
             (tableCell: HTMLTableCellElement, indexTDArray) => {
-                diaDaSemana += indexTDArray
                 let horario: THorario = {
                     element: tableCell,
                     dataRowId: indexTRArray,
                     dataColId: indexTDArray,
-                    diaDaSemana,
+                    diaDaSemana: indexTDArray + 2,
                     periodo: periodos[indexTRArray],
                     status: tableCell.hasChildNodes()
                         ? StatusHorario.OCUPADO
@@ -109,24 +107,25 @@ function criarCaixaDeSelecao(horario: THorario) {
 }
 function criarBlocoDeHorario(selectEl: HTMLSelectElement, horario: THorario) {
     let tipoHorario = selectEl.value
+    horario.status = StatusHorario.PREVIA
     switch (tipoHorario) {
         case TipoHorario.P:
             horario.tipo = TipoHorario.P
-            criarBlocoP(horario)
+            criarBlocoP(horario, true)
             break
         case TipoHorario.PE:
             horario.tipo = TipoHorario.PE
-            criarBlocoPE(horario)
+            criarBlocoPE(horario, true)
             break
         case TipoHorario.PAT:
             horario.tipo = TipoHorario.PAT
-            criarBlocoPAT(horario)
+            criarBlocoPAT(horario, true)
             break
         default:
             break
     }
 }
-function criarBlocoP(horario: THorario) {
+function criarBlocoP(horario: THorario, storage: boolean) {
     horario.element.innerHTML = /*html*/ `
     <div class="caixa_horario caixa_horario_p pendente">
         <span class="badge badge-important" title="Prévia: Clique em Adicionar Atividade (Preparação)"><i class="icon-exclamation-sign icon-white"></i>Prévia</span>
@@ -134,12 +133,19 @@ function criarBlocoP(horario: THorario) {
             <div><strong>Preparação</strong></div>
             <div> ${horario.periodo.horaInicio} - ${horario.periodo.horaFim}</div>
         </div>
-        <button type="button" class="btn btn-link btn-mini" title="Editar"><i class="icon-edit"></i></button>
+        <button type="button" class="btn btn-link btn-mini" title="Remover Prévia"><i class="icon-trash"></i></button>
     </div>
     `
-    gravarLocaStorage(horario)
+    let btnEditar = horario.element.querySelector("button")
+    btnEditar?.addEventListener("click", () => {
+        horario.element.innerHTML = ""
+        horario.element.appendChild(criarCaixaDeSelecao(horario))
+        removerLocalStorage(horario)
+    })
+
+    if (storage) gravarLocaStorage(horario)
 }
-function criarBlocoPE(horario: THorario) {
+function criarBlocoPE(horario: THorario, storage: boolean) {
     horario.element.innerHTML = /*html*/ `
     <div class="hovered  caixa_horario caixa_horario_pe pendente">
         <span class="badge badge-important" title="Prévia: Clique em Adicionar Atividade (Permanência)"><i class="icon-exclamation-sign icon-white"></i>Prévia</span>
@@ -147,12 +153,18 @@ function criarBlocoPE(horario: THorario) {
             <div><strong>Permanência</strong></div>
             <div> ${horario.periodo.horaInicio} - ${horario.periodo.horaFim}</div>
         </div>
-        <button type="button" class="btn btn-link btn-mini" title="Editar"><i class="icon-edit"></i></button>
+        <button type="button" class="btn btn-link btn-mini" title="Remover Prévia"><i class="icon-trash"></i></button>
 </div>
     `
-    gravarLocaStorage(horario)
+    let btnEditar = horario.element.querySelector("button")
+    btnEditar?.addEventListener("click", () => {
+        horario.element.innerHTML = ""
+        horario.element.appendChild(criarCaixaDeSelecao(horario))
+        removerLocalStorage(horario)
+    })
+    if (storage) gravarLocaStorage(horario)
 }
-function criarBlocoPAT(horario: THorario) {
+function criarBlocoPAT(horario: THorario, storage: boolean) {
     horario.element.innerHTML = /*html*/ `
     <div class="hovered  caixa_horario caixa_horario_pat pendente">
         <span class="badge badge-important" title="Prévia: Clique em Adicionar Atividade (PAT)"><i class="icon-exclamation-sign icon-white"></i>Prévia</span>
@@ -160,10 +172,16 @@ function criarBlocoPAT(horario: THorario) {
             <div><strong>PAT</strong></div>
             <div> ${horario.periodo.horaInicio} - ${horario.periodo.horaFim}</div>
         </div>
-        <button type="button" class="btn btn-link btn-mini" title="Editar"><i class="icon-edit"></i></button>
+        <button type="button" class="btn btn-link btn-mini" title="Remover Prévia"><i class="icon-trash"></i></button>
 </div>
     `
-    gravarLocaStorage(horario)
+    let btnEditar = horario.element.querySelector("button")
+    btnEditar?.addEventListener("click", () => {
+        horario.element.innerHTML = ""
+        horario.element.appendChild(criarCaixaDeSelecao(horario))
+        removerLocalStorage(horario)
+    })
+    if (storage) gravarLocaStorage(horario)
 }
 function gravarLocaStorage(horario: THorario) {
     let gradeHorarioStorage = localStorage.getItem("grade")
@@ -174,10 +192,55 @@ function gravarLocaStorage(horario: THorario) {
     gradeHorario.push(horario)
     localStorage.setItem("grade", JSON.stringify(gradeHorario))
 }
-function consultarLocalStorage() {}
+function removerLocalStorage(horario: THorario) {
+    let gradeHorarioStorage = localStorage.getItem("grade")
+    let gradeHorario: Array<THorario> = gradeHorarioStorage
+        ? JSON.parse(gradeHorarioStorage)
+        : []
+    let gradeHorarioFiltrada: Array<THorario> = []
 
+    gradeHorarioFiltrada = gradeHorario.filter((horarioModel: THorario) => {
+        return (
+            horario.dataColId != horarioModel.dataColId ||
+            horario.dataRowId != horarioModel.dataRowId
+        )
+    })
+    localStorage.setItem("grade", JSON.stringify(gradeHorarioFiltrada))
+}
+function consultarLocalStorage() {
+    let gradeHorarioStorage = localStorage.getItem("grade")
+    let gradeHorario: Array<THorario> = gradeHorarioStorage
+        ? JSON.parse(gradeHorarioStorage)
+        : []
+    let horarioModel: THorario | undefined
+    gradeHorario.forEach((horarioStorage) => {
+        horarioModel = gradeDeHorarioModel.find((horario) => {
+            return (
+                horario.dataColId == horarioStorage.dataColId &&
+                horario.dataRowId == horarioStorage.dataRowId
+            )
+        })
+        if (horarioModel) {
+            horarioModel.tipo = horarioStorage.tipo
+            horarioModel.status = horarioStorage.status
+        }
+        switch (horarioModel?.tipo) {
+            case TipoHorario.P:
+                criarBlocoP(horarioModel, false)
+                break
+            case TipoHorario.PE:
+                criarBlocoPE(horarioModel, false)
+                break
+            case TipoHorario.PAT:
+                criarBlocoPAT(horarioModel, false)
+                break
+            default:
+                break
+        }
+    })
+}
 ;(() => {
     gradeDeHorarioModel.push(...gerarGradeDeHorarioModel())
+    consultarLocalStorage()
     adicionarCaixaDeSelecaoTipoDeHorario(gradeDeHorarioModel)
-    console.log(gradeDeHorarioModel)
 })()
