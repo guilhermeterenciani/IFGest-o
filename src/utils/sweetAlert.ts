@@ -4,8 +4,8 @@ export const MODAL_LOADING_OPTIONS: SweetAlertOptions = {
     allowOutsideClick: false,
     showConfirmButton: false,
     didOpen: () => {
-        Swal.showLoading(null)
-    },
+        Swal.showLoading(undefined)
+    }
 }
 export const MODAL_CONFIRM_OPTIONS: SweetAlertOptions = {
     allowEscapeKey: false,
@@ -13,5 +13,5 @@ export const MODAL_CONFIRM_OPTIONS: SweetAlertOptions = {
     icon: "question",
     showCancelButton: true,
     cancelButtonText: "NÃO",
-    confirmButtonText: "SIM",
+    confirmButtonText: "SIM"
 }

@@ -1,4 +1,4 @@
-import { diaDaSemana, periodos } from "./periodos.mjs"
+import { diaDaSemana, periodos } from "./periodos"
 
 enum TipoHorario {
     NONE = "NONE",
