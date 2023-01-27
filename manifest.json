@@ -6,10 +6,6 @@
     "action": { "default_popup": "index.html" },
     "content_scripts": [
         {
-            "matches": ["https://academico.ifms.edu.br/"],
-            "js": ["./src/main.ts"]
-        },
-        {
             "matches": [
                 "https://academico.ifms.edu.br/administrativo/professores/diario/*/plano_ensino/editar/*"
             ],
@@ -45,5 +41,11 @@
             ],
             "js": ["./src/planoTrabalho/planoTrabalhoPrevia/adicionarP.js"]
         }
-    ]
+    ],
+    "icons": {
+        "16": "src/images/icon-16.png",
+        "32": "src/images/icon-32.png",
+        "48": "src/images/icon-48.png",
+        "128": "src/images/icon-128.png"
+    }
 }
