@@ -15,7 +15,7 @@
             "matches": [
                 "https://academico.ifms.edu.br/administrativo/horario_docentes/*"
             ],
-            "js": ["./src/planoTrabalho/content.js"]
+            "js": ["./src/planoTrabalho/calcularDiretrizes.js"]
         },
         {
             "matches": [
