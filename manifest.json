@@ -6,11 +6,14 @@
     "action": { "default_popup": "index.html" },
     "content_scripts": [
         {
+            "matches": ["https://academico.ifms.edu.br/"],
+            "js": ["./src/main.ts"]
+        },
+        {
             "matches": [
                 "https://academico.ifms.edu.br/administrativo/professores/diario/*/plano_ensino/editar/*"
             ],
-            "js": ["./src/planoEnsino/content.js"],
-            "css": ["./src/planoEnsino/style.css"]
+            "js": ["./src/planoEnsino/content.js"]
         },
         {
             "matches": [
@@ -22,8 +25,7 @@
             "matches": [
                 "https://academico.ifms.edu.br/administrativo/horario_docentes/editar/*"
             ],
-            "js": ["./src/planoTrabalho/planoTrabalhoPrevia/grade.ts"],
-            "css": ["planoTrabalho/planoTrabalhoPrevia/style.css"]
+            "js": ["./src/planoTrabalho/planoTrabalhoPrevia/grade.ts"]
         },
         {
             "matches": [
