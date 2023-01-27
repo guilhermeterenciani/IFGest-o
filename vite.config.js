@@ -1,23 +1,10 @@
-import { resolve } from "path"
+/**
+ * @type {import('vite').UserConfig}
+ */
 import { defineConfig } from "vite"
-import { chromeExtension } from "rollup-plugin-chrome-extension"
+import { crx } from "@crxjs/vite-plugin"
+import manifest from "./manifest.json"
 
-// https://vitejs.dev/config/
 export default defineConfig({
-    resolve: {
-        alias: {
-            "@": resolve(__dirname, "src"),
-        },
-    },
-    build: {
-        rollupOptions: {
-            input: "src/manifest.json",
-            plugins: [chromeExtension({ wrapContentScripts: false })],
-            output: {
-                dir: "./dist",
-                entryFileNames: "[name].js",
-                sourcemap: "hidden",
-            },
-        },
-    },
+    plugins: [crx({ manifest })]
 })
