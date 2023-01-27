@@ -1,5 +1,5 @@
 import { diaDaSemana, periodos } from "./periodos"
-
+import "./style.css"
 enum TipoHorario {
     NONE = "NONE",
     PAT = "PAT",

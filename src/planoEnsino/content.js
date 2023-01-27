@@ -1,21 +1,21 @@
 import Swal from "sweetalert2"
-
+import "./style.css"
 import {
     MODAL_CONFIRM_OPTIONS,
-    MODAL_LOADING_OPTIONS,
+    MODAL_LOADING_OPTIONS
 } from "../utils/sweetAlert"
 import {
     getDadosPropostaTrabalho,
     getConteudoDiario,
     getFormProposta,
-    gravarProposta,
+    gravarProposta
 } from "../services/api"
 import "../utils/datePrototypeGetWeek"
 const url = document.URL
 const idPlanoEnsino = url.split("/")[9]
 const idDiario = url.split("/")[6]
 const tableIdentificacao = document.querySelector(
-    "#PlanoEnsinoDiarioForm table",
+    "#PlanoEnsinoDiarioForm table"
 )
 const trCargaHoraria = tableIdentificacao.querySelector("tr:nth-child(5)")
 const tdCargaHoraria = trCargaHoraria.querySelector("td:first-child")
@@ -39,7 +39,7 @@ btnGerarProposta.addEventListener("click", async () => {
     Swal.fire({
         ...MODAL_CONFIRM_OPTIONS,
         title: "Gerar Calendário da Proposta",
-        text: `Este procedimento gera  o calendário da proposta do plano de ensino de forma automática, deseja continuar?`,
+        text: `Este procedimento gera  o calendário da proposta do plano de ensino de forma automática, deseja continuar?`
     }).then(async (result) => {
         if (result.isConfirmed) {
             const numeroDeAulasDaProposta = await getNumeroAulasProposta()
@@ -54,7 +54,7 @@ btnGerarProposta.addEventListener("click", async () => {
                         <p>
                             Já existe uma proposta cadastrada para este plano de ensino!  
                         </p>
-                    `,
+                    `
                 })
             } else {
                 await gerarProposta()
@@ -68,7 +68,7 @@ async function gerarProposta() {
     Swal.fire({
         title: "Gerando Calendário da Proposta",
         text: "aguarde...",
-        ...MODAL_LOADING_OPTIONS,
+        ...MODAL_LOADING_OPTIONS
     })
     const aulas = await criarListaDatasDeAula()
     if (!aulas) return false
@@ -90,7 +90,7 @@ async function criarListaDatasDeAula() {
     }
 
     let trListaDeAulas = Array.from(
-        tableConteudoDoDiario.querySelectorAll("tbody > tr"),
+        tableConteudoDoDiario.querySelectorAll("tbody > tr")
     )
 
     /* MAPEANDO ELEMENTO PARA STRING DE DATA E CONVERTENDO PARA OBJETO DATE */
@@ -115,18 +115,18 @@ async function criarListaDatasDeAula() {
             let listaDataDasAulas = aulasSemana[1]
             return {
                 dataInicial: Intl.DateTimeFormat("pt-BR").format(
-                    listaDataDasAulas[0],
+                    listaDataDasAulas[0]
                 ),
                 dataFinal: Intl.DateTimeFormat("pt-BR").format(
-                    listaDataDasAulas[listaDataDasAulas.length - 1],
+                    listaDataDasAulas[listaDataDasAulas.length - 1]
                 ),
                 qtde: listaDataDasAulas.length,
                 sabadoLetivo:
                     listaDataDasAulas[
                         listaDataDasAulas.length - 1
-                    ]?.getDay() === 6 ?? false,
+                    ]?.getDay() === 6 ?? false
             }
-        },
+        }
     )
     return aulasModelProposta
 }
@@ -141,11 +141,11 @@ async function getNumeroAulasProposta() {
     Swal.fire({
         ...MODAL_LOADING_OPTIONS,
         title: "Consultando aulas no Plano de Ensino",
-        text: "Aguarde...",
+        text: "Aguarde..."
     })
     const dadosProposta = await getDadosPropostaTrabalho(
         idDiario,
-        idPlanoEnsino,
+        idPlanoEnsino
     )
     const qtdeAulasProposta = dadosProposta.aaData
         .map((item) => {
@@ -162,12 +162,12 @@ async function prepararFormProposta(aulas) {
     const parser = new DOMParser()
     let docHTML = parser.parseFromString(response, "text/html")
     let formProposta = docHTML.querySelector(
-        "form#PlanoEnsinoPropostaTrabalhoDiarioForm",
+        "form#PlanoEnsinoPropostaTrabalhoDiarioForm"
     )
     let selecOptionsMeses = Array.from(
         formProposta.querySelectorAll(
-            "select#PlanoEnsinoPropostaTrabalhoMes > option",
-        ),
+            "select#PlanoEnsinoPropostaTrabalhoMes > option"
+        )
     )
     let mesesMap = new Map()
     selecOptionsMeses.forEach((option, index) => {
@@ -187,27 +187,27 @@ async function prepararFormProposta(aulas) {
     let arrayPromises = []
     aulas.forEach(async (aula) => {
         formPrincipal.querySelector(
-            "input#PlanoEnsinoPropostaTrabalhoInicio",
+            "input#PlanoEnsinoPropostaTrabalhoInicio"
         ).value = aula.dataInicial.split("/")[0]
         formPrincipal.querySelector(
-            "input#PlanoEnsinoPropostaTrabalhoFim",
+            "input#PlanoEnsinoPropostaTrabalhoFim"
         ).value = aula.dataFinal.split("/")[0]
         formPrincipal.querySelector(
-            "select#PlanoEnsinoPropostaTrabalhoMes",
+            "select#PlanoEnsinoPropostaTrabalhoMes"
         ).value = mesesMap.get(aula.dataInicial.split("/")[1])
         formPrincipal.querySelector(
-            "input#PlanoEnsinoPropostaTrabalhoQtAulas",
+            "input#PlanoEnsinoPropostaTrabalhoQtAulas"
         ).value = aula.qtde
         formPrincipal.querySelector(
-            "textarea#PlanoEnsinoPropostaTrabalhoConteudo",
+            "textarea#PlanoEnsinoPropostaTrabalhoConteudo"
         ).value = "*"
         if (aula.sabadoLetivo === true) {
             formPrincipal.querySelector(
-                "input#PlanoEnsinoPropostaTrabalhoObservacoes",
+                "input#PlanoEnsinoPropostaTrabalhoObservacoes"
             ).value = `${aula.dataFinal} - Sábado Letivo`
         } else {
             formPrincipal.querySelector(
-                "input#PlanoEnsinoPropostaTrabalhoObservacoes",
+                "input#PlanoEnsinoPropostaTrabalhoObservacoes"
             ).value = ``
         }
         arrayPromises.push(gravarProposta(formPrincipal, idDiario))
