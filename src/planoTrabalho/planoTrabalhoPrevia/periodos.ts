@@ -28,3 +28,12 @@ export const diaDaSemana = [
     "Sexta-feira",
     "Sábado"
 ]
+const diaDaSemanaSelectOption = new Map<number, string>()
+diaDaSemanaSelectOption.set(2, "Segunda-feira")
+diaDaSemanaSelectOption.set(3, "Terça-feira")
+diaDaSemanaSelectOption.set(4, "Quarta-feira")
+diaDaSemanaSelectOption.set(5, "Quinta-feira")
+diaDaSemanaSelectOption.set(6, "Sexta-feira")
+diaDaSemanaSelectOption.set(7, "Sábado")
+
+export { diaDaSemanaSelectOption }
