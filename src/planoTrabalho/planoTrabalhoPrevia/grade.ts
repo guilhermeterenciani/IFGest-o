@@ -1,29 +1,6 @@
 import { diaDaSemana, periodos } from "./periodos"
 import "./style.css"
-enum TipoHorario {
-    NONE = "NONE",
-    PAT = "PAT",
-    PE = "PE",
-    P = "P"
-}
-enum StatusHorario {
-    OCUPADO = "OCUPADO",
-    LIVRE = "LIVRE",
-    PREVIA = "PREVIA"
-}
-type THorario = {
-    dataRowId: number
-    dataColId: number
-    diaDaSemana: number
-    periodo: {
-        horaInicio: string
-        horaFim: string
-    }
-    tipo?: TipoHorario
-    status: StatusHorario
-    element: HTMLTableCellElement
-}
-
+import { THorario, StatusHorario, TipoHorario } from "./types"
 const gradeDeHorarioModel: Array<THorario> = new Array<THorario>()
 
 function gerarGradeDeHorarioModel() {

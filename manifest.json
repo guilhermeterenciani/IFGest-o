@@ -27,7 +27,7 @@
             "matches": [
                 "https://academico.ifms.edu.br/administrativo/pats/adicionar/*"
             ],
-            "js": ["./src/planoTrabalho/planoTrabalhoPrevia/adicionarPAT.js"]
+            "js": ["./src/planoTrabalho/planoTrabalhoPrevia/adicionarPAT.ts"]
         },
         {
             "matches": [
