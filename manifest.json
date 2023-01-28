@@ -1,0 +1,52 @@
+{
+    "name": "Acadêmico IFMS",
+    "description": "Adiciona funcionalidades para auxiliar na gestão dos planos de ensino e planos individuais de trabalho.",
+    "version": "4.0.0",
+    "manifest_version": 3,
+    "action": { "default_popup": "index.html" },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://academico.ifms.edu.br/administrativo/professores/diario/*/plano_ensino/editar/*"
+            ],
+            "js": ["./src/planoEnsino/content.js"]
+        },
+        {
+            "matches": [
+                "https://academico.ifms.edu.br/administrativo/horario_docentes/*"
+            ],
+            "js": ["./src/planoTrabalho/calcularDiretrizes.js"]
+        },
+        {
+            "matches": [
+                "https://academico.ifms.edu.br/administrativo/horario_docentes/editar/*"
+            ],
+            "js": ["./src/planoTrabalho/planoTrabalhoPrevia/grade.ts"]
+        },
+        {
+            "matches": [
+                "https://academico.ifms.edu.br/administrativo/pats/adicionar/*"
+            ],
+            "js": ["./src/planoTrabalho/planoTrabalhoPrevia/adicionarPAT.ts"]
+        },
+        {
+            "matches": [
+                "https://academico.ifms.edu.br/administrativo/permanencias/adicionar/*"
+            ],
+            "js": ["./src/planoTrabalho/planoTrabalhoPrevia/adicionarPE.js"]
+        },
+        {
+            "matches": [
+                "https://academico.ifms.edu.br/administrativo/preparacoes/adicionar/*"
+            ],
+            "js": ["./src/planoTrabalho/planoTrabalhoPrevia/adicionarP.js"]
+        }
+    ],
+    "icons": {
+        "16": "src/images/icon-16.png",
+        "32": "src/images/icon-32.png",
+        "48": "src/images/icon-48.png",
+        "128": "src/images/icon-128.png"
+    },
+    "permissions": ["storage"]
+}

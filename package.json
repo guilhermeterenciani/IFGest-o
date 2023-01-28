@@ -1,21 +1,18 @@
 {
-    "name": "acad-ifms-extension",
+    "name": "plugin-academico",
     "private": true,
-    "version": "3.0.0",
-    "type": "module",
+    "version": "4.0.0",
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
+        "build": "tsc && vite build",
         "preview": "vite preview"
     },
     "devDependencies": {
-        "@types/node": "^18.11.18",
-        "rollup-plugin-chrome-extension": "^3.6.10",
-        "typescript": "^4.9.3",
-        "vite": "^4.0.0",
-        "vite-plugin-chrome-extension": "^0.0.7"
+        "@crxjs/vite-plugin": "^1.0.14",
+        "typescript": "^4.5.4",
+        "vite": "^2.9.9"
     },
     "dependencies": {
-        "sweetalert2": "^11.6.16"
+        "sweetalert2": "^11.7.1"
     }
 }
