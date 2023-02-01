@@ -6,7 +6,7 @@ const horaFimNodeDom = document.getElementById("NovoFim")
 const diaSemanaDom = document.getElementById("NovoDiaSemanaId")
 const btnAddNodeDom = document.getElementById("adicionar")
 
-for (horario of filteredPE) {
+for (let horario of filteredPE) {
     includePEOnInterface(
         horario.diaDaSemana,
         horario.periodo.horaInicio,
