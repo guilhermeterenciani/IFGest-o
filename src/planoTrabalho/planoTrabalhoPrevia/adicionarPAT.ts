@@ -67,6 +67,7 @@ if (filteredPAT.length != 0 && patId.value) {
     })
 } else {
     incluirHorariosNaGrade()
+    removerPATStorage()
 }
 
 function removerPATStorage() {
