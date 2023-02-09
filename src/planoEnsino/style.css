@@ -1,3 +1,52 @@
 #btn_gerar_proposta{
     margin-left: 5px;
 }
+.praticas_ensino{
+    display:grid;
+}
+.title-checkbox{
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+.text-area-content{
+    width: 50%;
+    height: 100%;
+    min-height: 75px;
+}
+.content-checkbox{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 5px;
+    column-gap: 5px;
+    -ms-grid-row-align: center;
+    /*decrease number of columns in small screen*/
+    @media screen and (max-width: 1250px) {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+.content-checkbox a{ 
+    border-color: cadetblue;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 2px;
+    box-sizing: border-box;
+    padding-left: 5px;
+    text-decoration: none;
+    min-height: 30px;
+    background-color: #f1f0f0;
+    color: #000;
+}
+.content-checkbox a:hover{
+    background-color: #e0e0e0;
+    color: #000;
+}
+.content-checkbox .marked{
+    background-color: #28dc00;
+    color: #000;
+}
+.content-checkbox .marked:hover{
+    background-color: #1db000;
+    color: #000;
+}

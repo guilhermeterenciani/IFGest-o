@@ -33,3 +33,25 @@ export async function gravarProposta(form: HTMLFormElement, idDiario: number) {
         },
     )
 }
+export async function getFormPropostaTrabalhoPlanoDeEnsino(
+    idDiario: number,
+    idProposta: number,
+) {
+    const response = await fetch(
+        `${baseURL}${idDiario}/plano_ensino/form_proposta_trabalho/${idProposta}`
+    )
+    //console.log(await response);
+    const data = await response.text();
+    return data
+}
+
+export async function gravarPropostaEditada(form: HTMLFormElement, idDiario: number) {
+    let formData = new FormData(form)
+    return fetch(
+        `${baseURL}${idDiario}/plano_ensino/salvar_form_proposta_trabalho`,
+        {
+            method: "POST",
+            body: formData,
+        },
+    )
+}
