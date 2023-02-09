@@ -255,7 +255,8 @@ setTimeout(() => {
                 propostaTrabalho.push({
                     idProposta: idProposta,
                     conteudo: td.innerText,
-                    praticasEnsino: []
+                    praticasEnsino: [],
+                    recursoEnsino: []
                 });
             }
             else{
@@ -275,7 +276,8 @@ setTimeout(() => {
                         propostaTrabalho.push({
                             idProposta: value,
                             conteudo: event.target.value,
-                            praticasEnsino: []
+                            praticasEnsino: [],
+                            recursoEnsino: []
                         });
                     }
                     else{
@@ -290,20 +292,34 @@ setTimeout(() => {
 
             //Verified previous marked praticas de ensino and create a array with de marked_praticas_ensino
             //style of técnicas de ensino text that is in the table "Técnicas de Ensino: Aula prática / Estudo de caso / Júri simulado / Expositiva/dialogada"
-            let pattern = /Técnicas de Ensino: ([\w\s\/áéíóú]+)/;
-            let match = tableBodyMetodologia.innerHTML.match(pattern);
+            let patternTecnicasEnsino = /Técnicas de Ensino: ([\w\s\/áéíóú]+)/;
+            let match = tableBodyMetodologia.innerHTML.match(patternTecnicasEnsino);
             let marked_praticas_ensino = [];
             if(match){
                 marked_praticas_ensino = match[1].split(" / ");
             }
-            //console.log("marked_praticas_ensino",marked_praticas_ensino);
+
+            
+            let patternRecursoEnsino = /Recursos de Ensino: ([\w\s\/áéíóú]+)/;
+            match = tableBodyMetodologia.innerHTML.match(patternRecursoEnsino);
+            let marked_recursos_ensino = [];
+            if(match){
+                marked_recursos_ensino = match[1].split(" / ");
+            }
+            console.log(marked_praticas_ensino);
             tableBodyMetodologia.innerHTML="";
             tableBodyMetodologia.classList.add("praticas_ensino");
             let div = document.createElement("div");
             div.classList.add("title-checkbox");
             div.innerHTML="Práticas de Ensino:";
             tableBodyMetodologia.appendChild(div);
-            tableBodyMetodologia.appendChild(createContentCheckbox(idProposta,marked_praticas_ensino));
+            tableBodyMetodologia.appendChild(createContentCheckboxTecnicasEnsino(idProposta,marked_praticas_ensino));
+
+            let divRecursos = document.createElement("div");
+            divRecursos.classList.add("title-checkbox");
+            divRecursos.innerHTML="Recursos de Ensino:";
+            tableBodyMetodologia.appendChild(divRecursos);
+            tableBodyMetodologia.appendChild(createContentCheckboxRecursoEnsino(idProposta,marked_recursos_ensino));
         });
 
         //Criar um botão do tipo link para salvar as informações
@@ -315,7 +331,10 @@ setTimeout(() => {
             event.preventDefault();
             //console.log("clicouSalvar",event);
             let proposta_id = event.target.parentNode.childNodes[2].attributes[4].value;
-            let propostaASerCadastrada = propostaTrabalho.filter((item) => item.idProposta == proposta_id)[0]; 
+            let storage = localStorage.getItem("propostaTrabalho");
+            let propostaTrabalho = storage ? JSON.parse(storage) : []
+            let propostaASerCadastrada = propostaTrabalho.filter((item) => item.idProposta == proposta_id)[0];
+            console.log("propostaASerCadastrada",propostaASerCadastrada);
             // let formProposta = await getFormPropostaTrabalhoPlanoDeEnsino(idDiario,proposta_id);
             // console.log("Form proposta",formProposta)
             // const parser = new DOMParser()
@@ -378,23 +397,36 @@ setTimeout(() => {
         ).value = propostaASerCadastrada.conteudo;
             
         
-        let select = formPrincipal.querySelector("select#PlanoEnsinoPropostaTrabalhoTecnicasEnsino");
-        let options = Array.from(select.querySelectorAll("option"));
+        let selectTecnicasEnsino = formPrincipal.querySelector("select#PlanoEnsinoPropostaTrabalhoTecnicasEnsino");
+        let options = Array.from(selectTecnicasEnsino.querySelectorAll("option"));
         options.forEach((option) => {
             if (!propostaASerCadastrada.praticasEnsino.includes(option.value)) {
                 option.remove();
             }
         });
-        let form = formPrincipal.querySelector("select#PlanoEnsinoPropostaTrabalhoTecnicasEnsino");
         for (let item of propostaASerCadastrada.praticasEnsino) {
             let option = document.createElement("option");
             option.value = item;
             option.selected = true;
-            form.appendChild(option);
+            selectTecnicasEnsino.appendChild(option);
+        }
+
+        let selectRecursoEnsino = formPrincipal.querySelector("select#PlanoEnsinoPropostaTrabalhoRecursosEnsino");
+        options.forEach((option) => {
+            if (!propostaASerCadastrada.recursoEnsino.includes(option.value)) {
+                option.remove();
+            }
+        });
+        for (let item of propostaASerCadastrada.recursoEnsino) {
+            let option = document.createElement("option");
+            option.value = item;
+            option.selected = true;
+            selectRecursoEnsino.appendChild(option);
         }
 
         let res = await gravarPropostaEditada(formPrincipal,idDiario);
         let tex = await res.text();
+        console.log("Resposta send",tex);
         //TODO: conferir se realmente deu certo gravar a proposta editada.
         //if(tex.includes("Proposta de trabalho salva com sucesso!"){}
             //limpar o caompo de localstorage após salvar.
@@ -407,9 +439,9 @@ setTimeout(() => {
 
         //TODO: tirar daqui depois...
         //console.log("res",tex);
-        setTimeout(() => {
+        //setTimeout(() => {
             document.location.reload();
-        }, 2000);
+        //}, 1000);
         });
 
     });
@@ -417,7 +449,7 @@ setTimeout(() => {
 let storage = localStorage.getItem("propostaTrabalho");
 let propostaTrabalho = storage ? JSON.parse(storage) : []
 
-function createContentCheckbox(idProposta,marked_praticas_ensino){
+function createContentCheckboxTecnicasEnsino(idProposta,marked_praticas_ensino){
     let div = document.createElement("div");
     div.classList.add("content-checkbox");
     let storage = localStorage.getItem("propostaTrabalho");
@@ -450,6 +482,30 @@ function createContentCheckbox(idProposta,marked_praticas_ensino){
     };
     return div;
 }
+function createContentCheckboxRecursoEnsino(idProposta,marked_recursos_ensino){
+    let div = document.createElement("div");
+    div.classList.add("content-checkbox");
+    let storage = localStorage.getItem("propostaTrabalho");
+    let propostaTrabalho = storage ? JSON.parse(storage) : []
+    let propostaASerEditada = propostaTrabalho.find((item) => item.idProposta == idProposta);
+
+    propostaASerEditada.recursoEnsino = marked_recursos_ensino;
+
+    //console.log("propostaTrabalhoNova",propostaTrabalho);
+    localStorage.setItem("propostaTrabalho",JSON.stringify(propostaTrabalho));
+    for(let item of recursos_ensino){
+        let a = document.createElement("a");
+        if(marked_recursos_ensino.includes(item)){
+            a.classList.add("item-checkbox","marked");
+        }
+        a.classList.add("item-checkbox");
+        a.href = "javascript:void(0);"
+        a.onclick=handleRecursoEnsino;
+        a.innerText = item;
+        div.appendChild(a);
+    };
+    return div;
+}
 const praticas_ensino = 
     ["Aula prática",
     "Debate",
@@ -467,21 +523,18 @@ const praticas_ensino =
     "Visita técnica",
     "Outra (especificar)"]
     const recursos_ensino=
-    `
-    <div class="content-checkbox">
-    <button class="item-checkbox">Biblioteca</button>
-    <button class="item-checkbox">Ficha avaliativa</button>
-    <button class="item-checkbox">Filme</button>
-    <button class="item-checkbox">Laboratório</button>
-    <button class="item-checkbox">Livro didático</button>
-    <button class="item-checkbox">Lousa Digital</button>
-    <button class="item-checkbox">Material concreto específico</button>
-    <button class="item-checkbox">Material impresso (apostila, textos)</button>
-    <button class="item-checkbox">Projetor multimídia</button>
-    <button class="item-checkbox">Quadro branco/canetão</button>
-    <button class="item-checkbox">TV, DVD</button>
-    <button class="item-checkbox">Outro (especificar)</button>
-    </div>`
+    ["Biblioteca",
+    "Ficha avaliativa",
+    "Filme",
+    "Laboratório",
+    "Livro didático",
+    "Lousa Digital",
+    "Material concreto específico",
+    "Material impresso (apostila, textos)",
+    "Projetor multimídia",
+    "Quadro branco/canetão",
+    "TV, DVD",
+    "Outro (especificar)"]
 
 function handlePraticasEnsino(event){
     let value = event.target.parentElement.parentNode.nextSibling.childNodes[2].attributes[4].value;
@@ -506,6 +559,25 @@ function handlePraticasEnsino(event){
     propostaTrabalho.map((item) => {
         if(item.idProposta === value){
             item.praticasEnsino.push(event.target.innerText);
+        }
+    });
+    localStorage.setItem("propostaTrabalho", JSON.stringify(propostaTrabalho));
+    event.target.classList.add("marked");
+}
+function handleRecursoEnsino(event){
+    let value = event.target.parentElement.parentNode.nextSibling.childNodes[2].attributes[4].value;
+    let storage = localStorage.getItem("propostaTrabalho");
+    let propostaTrabalho = storage ? JSON.parse(storage) : []
+    let result = propostaTrabalho.filter((item) => item.idProposta === value);
+    if(result[0].recursoEnsino.includes(event.target.innerText)){
+        result[0].recursoEnsino = result[0].recursoEnsino.filter((item) => item !== event.target.innerText);
+        localStorage.setItem("propostaTrabalho", JSON.stringify(propostaTrabalho));
+        event.target.classList.remove("marked");
+        return;
+    }
+    propostaTrabalho.map((item) => {
+        if(item.idProposta === value){
+            item.recursoEnsino.push(event.target.innerText);
         }
     });
     localStorage.setItem("propostaTrabalho", JSON.stringify(propostaTrabalho));
