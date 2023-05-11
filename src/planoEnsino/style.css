@@ -10,7 +10,7 @@
     margin-bottom: 5px;
 }
 .text-area-content{
-    width: 50%;
+    width: 90%;
     height: 100%;
     min-height: 75px;
 }
@@ -47,6 +47,6 @@
     color: #000;
 }
 .content-checkbox .marked:hover{
-    background-color: #1db000;
+    background-color: #1f9c00;
     color: #000;
 }

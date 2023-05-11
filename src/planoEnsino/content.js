@@ -507,32 +507,35 @@ function createContentCheckboxRecursoEnsino(idProposta,marked_recursos_ensino){
     return div;
 }
 const praticas_ensino = 
-    ["Aula prática",
+    [
+    "Aula prática",
+    "Expositiva/dialogada",
+    "Trabalho em grupo",
+    "Palestra",
     "Debate",
     "Dramatização",
     "Estudo de caso",
     "Estudo dirigido",
-    "Expositiva/dialogada",
     "Extensão",
     "Júri simulado",
     "Painel integrado",
-    "Palestra",
     "Pesquisa",
     "Seminário",
-    "Trabalho em grupo",
     "Visita técnica",
     "Outra (especificar)"]
     const recursos_ensino=
-    ["Biblioteca",
-    "Ficha avaliativa",
-    "Filme",
+    [
     "Laboratório",
-    "Livro didático",
-    "Lousa Digital",
-    "Material concreto específico",
-    "Material impresso (apostila, textos)",
     "Projetor multimídia",
     "Quadro branco/canetão",
+    "Moodle",
+    "Lousa Digital",
+    "Biblioteca",
+    "Ficha avaliativa",
+    "Filme",
+    "Livro didático",
+    "Material concreto específico",
+    "Material impresso (apostila, textos)",
     "TV, DVD",
     "Outro (especificar)"]
 
