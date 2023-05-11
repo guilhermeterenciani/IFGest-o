@@ -7,6 +7,12 @@
     "content_scripts": [
         {
             "matches": [
+                "https://academico.ifms.edu.br/administrativo/professores/diario/*"
+            ],
+            "js": ["./src/substituiNomeTurma/substituiNomeTurma.js"]
+        },
+        {
+            "matches": [
                 "https://academico.ifms.edu.br/administrativo/professores/diario/*/plano_ensino/editar/*"
             ],
             "js": ["./src/planoEnsino/content.js"]
