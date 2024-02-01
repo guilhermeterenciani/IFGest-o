@@ -10,6 +10,6 @@ const tdClasse = table[0].childNodes[3].querySelectorAll("td:nth-child(1)")
 for(let td of tdClasse){
     let classe = (td.innerText).substring(0, 12);
     if(nomeTurma.find((item)=>item.nomeDiario==classe)!=undefined){
-        td.innerHTML = nomeTurma.find((item)=>item.nomeDiario==classe).turma + td.innerHTML;
+        td.innerHTML = nomeTurma.find((item)=>item.nomeDiario==classe).turma+": " + td.innerHTML;
     }
 }
