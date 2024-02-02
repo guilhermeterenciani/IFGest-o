@@ -477,7 +477,8 @@ function createContentCheckboxTecnicasEnsino(idProposta,marked_praticas_ensino){
         a.classList.add("item-checkbox");
         a.href = "javascript:void(0);"
         a.onclick=handlePraticasEnsino;
-        a.innerText = item;
+        a.title = item
+        a.innerHTML = "<i class='icon-plus-sign'></i>";
         div.appendChild(a);
     };
     return div;
@@ -500,8 +501,9 @@ function createContentCheckboxRecursoEnsino(idProposta,marked_recursos_ensino){
         }
         a.classList.add("item-checkbox");
         a.href = "javascript:void(0);"
+        a.title = item
         a.onclick=handleRecursoEnsino;
-        a.innerText = item;
+        a.innerHTML = "<i class='icon-plus-sign'></i>"//item;
         div.appendChild(a);
     };
     return div;
