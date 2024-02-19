@@ -37,6 +37,10 @@
     justify-content: center;
     gap: 5px;
 }
+.content-checkbox a i{
+    width: 24px;
+    height: 24px;
+}
 .content-checkbox a:hover{
     background-color: #e0e0e0;
     color: #000;

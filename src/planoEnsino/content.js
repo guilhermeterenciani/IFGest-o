@@ -292,7 +292,7 @@ setTimeout(() => {
 
             //Verified previous marked praticas de ensino and create a array with de marked_praticas_ensino
             //style of técnicas de ensino text that is in the table "Técnicas de Ensino: Aula prática / Estudo de caso / Júri simulado / Expositiva/dialogada"
-            let patternTecnicasEnsino = /Técnicas de Ensino: ([\w\s\/áéíóú]+)/;
+            let patternTecnicasEnsino = /Técnicas de Ensino: ([\w\s\/áéíóúçã]+)/;
             let match = tableBodyMetodologia.innerHTML.match(patternTecnicasEnsino);
             let marked_praticas_ensino = [];
             if(match){
@@ -300,7 +300,7 @@ setTimeout(() => {
             }
 
             
-            let patternRecursoEnsino = /Recursos de Ensino: ([\w\s\/áéíóú]+)/;
+            let patternRecursoEnsino = /Recursos de Ensino: ([\w\s\/áéíóúçã]+)/;
             match = tableBodyMetodologia.innerHTML.match(patternRecursoEnsino);
             let marked_recursos_ensino = [];
             if(match){
@@ -542,49 +542,50 @@ const praticas_ensino =
     "Outro (especificar)"]
 
 function handlePraticasEnsino(event){
-    let value = event.target.parentElement.parentNode.nextSibling.childNodes[2].attributes[4].value;
+    console.log("event",event)
+    let value = event.target.parentElement.parentNode.parentNode.nextSibling.childNodes[2].attributes[4].value;
     let storage = localStorage.getItem("propostaTrabalho");
     let propostaTrabalho = storage ? JSON.parse(storage) : []
     let result = propostaTrabalho.filter((item) => item.idProposta === value);
     if(result.length === 0){
         propostaTrabalho.push({
             idProposta: value,
-            praticasEnsino: [event.target.innerText]
+            praticasEnsino: [event.target.parentElement.title]
         });
         localStorage.setItem("propostaTrabalho", JSON.stringify(propostaTrabalho));
-        event.target.classList.add("marked");
+        event.target.parentElement.classList.add("marked");
         return;
     }
-    if(result[0].praticasEnsino.includes(event.target.innerText)){
-        result[0].praticasEnsino = result[0].praticasEnsino.filter((item) => item !== event.target.innerText);
+    if(result[0].praticasEnsino.includes(event.target.parentElement.title)){
+        result[0].praticasEnsino = result[0].praticasEnsino.filter((item) => item !== event.target.parentElement.title);
         localStorage.setItem("propostaTrabalho", JSON.stringify(propostaTrabalho));
-        event.target.classList.remove("marked");
+        event.target.parentElement.classList.remove("marked");
         return;
     }
     propostaTrabalho.map((item) => {
         if(item.idProposta === value){
-            item.praticasEnsino.push(event.target.innerText);
+            item.praticasEnsino.push(event.target.parentElement.title);
         }
     });
     localStorage.setItem("propostaTrabalho", JSON.stringify(propostaTrabalho));
-    event.target.classList.add("marked");
+    event.target.parentElement.classList.add("marked");
 }
 function handleRecursoEnsino(event){
-    let value = event.target.parentElement.parentNode.nextSibling.childNodes[2].attributes[4].value;
+    let value = event.target.parentElement.parentNode.parentNode.nextSibling.childNodes[2].attributes[4].value;
     let storage = localStorage.getItem("propostaTrabalho");
     let propostaTrabalho = storage ? JSON.parse(storage) : []
     let result = propostaTrabalho.filter((item) => item.idProposta === value);
-    if(result[0].recursoEnsino.includes(event.target.innerText)){
-        result[0].recursoEnsino = result[0].recursoEnsino.filter((item) => item !== event.target.innerText);
+    if(result[0].recursoEnsino.includes(event.target.parentElement.title)){
+        result[0].recursoEnsino = result[0].recursoEnsino.filter((item) => item !== event.target.parentElement.title);
         localStorage.setItem("propostaTrabalho", JSON.stringify(propostaTrabalho));
-        event.target.classList.remove("marked");
+        event.target.parentElement.classList.remove("marked");
         return;
     }
     propostaTrabalho.map((item) => {
         if(item.idProposta === value){
-            item.recursoEnsino.push(event.target.innerText);
+            item.recursoEnsino.push(event.target.parentElement.title);
         }
     });
     localStorage.setItem("propostaTrabalho", JSON.stringify(propostaTrabalho));
-    event.target.classList.add("marked");
+    event.target.parentElement.classList.add("marked");
 }
