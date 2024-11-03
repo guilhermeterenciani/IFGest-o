@@ -1,18 +1,19 @@
 {
-    "name": "plugin-academico",
-    "private": true,
-    "version": "4.0.1",
-    "scripts": {
-        "dev": "vite",
-        "build": "tsc && vite build",
-        "preview": "vite preview"
-    },
-    "devDependencies": {
-        "@crxjs/vite-plugin": "^1.0.14",
-        "typescript": "^4.5.4",
-        "vite": "^2.9.9"
-    },
-    "dependencies": {
-        "sweetalert2": "^11.7.1"
-    }
+  "name": "plugin-academico",
+  "private": true,
+  "version": "4.0.1",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@crxjs/vite-plugin": "^2.0.0-beta.28",
+    "typescript": "^4.5.4",
+    "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "sweetalert2": "^11.6.13",
+    "vite-plugin-csp-guard": "^1.1.3"
+  }
 }
